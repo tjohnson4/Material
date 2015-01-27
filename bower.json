@@ -1,0 +1,28 @@
+{
+  "name": "material",
+  "version": "1.0.0",
+  "authors": [
+    "Todd Johnson"
+  ],
+  "description": "A test app using Google Polymer Material Components",
+  "main": "app.js",
+  "keywords": [
+    "Polymer",
+    "Material",
+    "Design"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#~0.5.4",
+    "core-elements": "Polymer/core-elements#~0.5.4",
+    "paper-elements": "Polymer/paper-elements#~0.5.4"
+  }
+}
