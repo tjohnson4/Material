@@ -1,4 +1,4 @@
-/*!  v0.0.0 | (c) 2015 tsj4.com. build date : 2015-01-28 */
+/*!  v0.0.0 | (c) 2015 tjohnson4.github.io | build date : 2015-01-28 */
 
 window.WebComponents = window.WebComponents || {}, function(e) {
     var t = e.flags || {}, n = "webcomponents.js", r = document.querySelector('script[src*="' + n + '"]');
