@@ -14,7 +14,9 @@ module.exports = function(grunt) {
             "src/js/App.js",
             "src/js/models/MenuItem.js",
             "src/js/collections/MenuList.js",
-            "src/js/routes/Router.js",
+            "src/js/views/MenuView.js",
+            "src/js/router/Router.js",
+            "src/js/models/Main.js",
             "src/js/Setup.js"
         ],
 
@@ -68,12 +70,30 @@ module.exports = function(grunt) {
                     'public/styles/min.css' : "<%= cssSrc %>"
                 }
             }
+        },
+        watch : {
+            less: {
+                // We watch and compile sass files as normal but don't live reload here
+                files : ["src/less/*.less"],
+                tasks : ["less"]
+            },
+
+            css : {
+                files : ["src/css/*.css"],
+                tasks : ["cssmin"]
+            },
+
+            js : {
+                files : ["src/js/*.js", "src/js/**/*.js"],
+                tasks : ["uglify:development"]
+            }
         }
     });
 
     grunt.loadNpmTasks("grunt-contrib-uglify");
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.registerTask("release", ["uglify:release", "less", "cssmin"]); // TODO : include following tasks : "jasmine", "yuidoc"
     grunt.registerTask("default", ["uglify:development", "less", "cssmin"]);

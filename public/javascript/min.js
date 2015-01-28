@@ -11287,6 +11287,8 @@ window.WebComponents = window.WebComponents || {}, function(e) {
 
 window.App = {
     init: function() {
+        App.TemplateLoader = document.querySelector("tsj4-bb-template-loader");
+        App.TemplateLoader.PATH = "templates";
         var hash = window.location.hash;
         App.main = new App.Main({
             startRoute: hash
@@ -11312,8 +11314,85 @@ App.MenuList = Backbone.Collection.extend({
     }
 });
 
+App.MenuView = Backbone.View.extend({
+    el: "core-menu",
+    template: "menu-view",
+    render: function() {
+        console.log("MenuView.render");
+        var data = {
+            items: this.collection.toJSON()
+        };
+        $(this.el).html(App.TemplateLoader.render(this.template, data));
+    }
+});
+
+App.Router = Backbone.Router.extend({
+    routes: {
+        start: "start",
+        help: "help",
+        discover: "discover",
+        account: "account"
+    },
+    start: function() {
+        console.log("start");
+        App.menuView.collection.fetch({
+            success: function() {
+                App.menuView.render();
+            },
+            error: function() {
+                console.log("error");
+            }
+        });
+    },
+    account: function() {
+        console.log("account");
+    },
+    discover: function() {
+        console.log("discover");
+    },
+    help: function() {
+        console.log("help");
+    }
+});
+
+App.Main = Backbone.Model.extend({
+    defaults: {
+        startRoute: undefined
+    },
+    initialize: function() {
+        console.log("Main.initialize");
+        this.createCollections();
+        this.createViews();
+        this.createRouter();
+    },
+    createCollections: function() {
+        console.log("Main.createCollections");
+        App.menu = new App.MenuList();
+    },
+    createViews: function() {
+        console.log("Main.createViews");
+        App.menuView = new App.MenuView({
+            collection: App.menu
+        });
+    },
+    createRouter: function() {
+        var startRoute = this.get("startRoute");
+        console.log("Main.createRouter, start route : " + startRoute);
+        App.router = new App.Router();
+        Backbone.history.start();
+        if (!startRoute) {
+            App.router.navigate("start", {
+                trigger: true
+            });
+        } else {
+            App.router.navigate(startRoute, {
+                trigger: true
+            });
+        }
+    }
+});
+
 window.onload = function() {
-    TemplateUtil.path = "/templates";
     App.init();
 };
 //# sourceMappingURL=min.js.map

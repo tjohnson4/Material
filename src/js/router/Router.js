@@ -1,6 +1,6 @@
 App.Router = Backbone.Router.extend({
     routes: {
-        "/"        : "start",
+        "start"    : "start",
         "help"     : "help",
         "discover" : "discover",
         "account"  : "account"
@@ -8,6 +8,15 @@ App.Router = Backbone.Router.extend({
 
     start : function () {
         console.log("start");
+
+        App.menuView.collection.fetch({
+            success : function () {
+                App.menuView.render();
+            },
+            error : function () {
+                console.log("error")
+            }
+        })
     },
 
     account : function () {
