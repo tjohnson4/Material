@@ -1,0 +1,9 @@
+<% if (obj.hasOwnProperty("icon") && obj.icon) { %>
+    <core-item icon="<%= icon %>" label="<%= label %>">
+        <a href="#<%= hash %>" target="_self"></a>
+    </core-item>
+<% } else { %>
+    <core-item label="<%= label %>">
+        <a href="#<%= hash %>" target="_self"></a>
+    </core-item>
+<% } %>
