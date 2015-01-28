@@ -25,7 +25,7 @@ module.exports = function(grunt) {
 
         uglify : {
             options : {
-                banner : "/*! <%= pkg.title %> v<%= pkg.version %> | (c) 2015 tsj4.com. build date : <%= grunt.template.today('yyyy-mm-dd') %> */\n",
+                banner : "/*! <%= pkg.title %> v<%= pkg.version %> | (c) 2015 tjohnson4.github.io. build date : <%= grunt.template.today('yyyy-mm-dd') %> */\n",
                 sourceMap :true,
                 sourceMapIncludeSources : true,
                 mangle : true
