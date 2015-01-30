@@ -7,34 +7,24 @@ App.Main = Backbone.Model.extend({
     initialize : function () {
         console.log("Main.initialize");
 
-        this.createCollections();
         this.createViews();
         this.createRouter();
-    },
-
-    createCollections : function () {
-        console.log("Main.createCollections");
-
-        App.menu = new App.MenuList();
     },
 
     createViews : function () {
         console.log("Main.createViews");
 
-        App.menuView = new App.MenuView({collection : App.menu});
+        App.menuView = new App.MenuView({collection : new App.MenuList()});
+        App.galleryView = new App.GalleryView({collection : new App.GalleryList()});
     },
 
     createRouter : function () {
-        var startRoute = this.get("startRoute");
+        var startRoute = this.get("startRoute") || "start";
         console.log("Main.createRouter, start route : "+startRoute);
 
         App.router = new App.Router();
         Backbone.history.start();
 
-        if (!startRoute) {
-            App.router.navigate("start", {trigger:true});
-        } else {
-            App.router.navigate(startRoute, {trigger:true});
-        }
+        App.router.navigate(startRoute, {trigger:true});
     }
 });

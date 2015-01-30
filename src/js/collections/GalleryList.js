@@ -1,7 +1,7 @@
-App.MenuList = Backbone.Collection.extend({
-    model : App.MenuItem,
+App.GalleryList = Backbone.Collection.extend({
+    model : App.GalleryItem,
 
-    url : "/api/v1/menu",
+    url : "/api/v1/galleries",
 
     parse : function (res) {
         var items = [];

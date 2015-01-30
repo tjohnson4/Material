@@ -15,6 +15,9 @@ module.exports = function(grunt) {
             "src/js/models/MenuItem.js",
             "src/js/collections/MenuList.js",
             "src/js/views/MenuView.js",
+            "src/js/models/GalleryItem.js",
+            "src/js/collections/GalleryList.js",
+            "src/js/views/GalleryView.js",
             "src/js/router/Router.js",
             "src/js/models/Main.js",
             "src/js/Setup.js"

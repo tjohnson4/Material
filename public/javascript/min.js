@@ -1,4 +1,4 @@
-/*!  v0.0.0 | (c) 2015 tjohnson4.github.io | build date : 2015-01-28 */
+/*!  v0.0.0 | (c) 2015 tjohnson4.github.io | build date : 2015-01-30 */
 
 window.WebComponents = window.WebComponents || {}, function(e) {
     var t = e.flags || {}, n = "webcomponents.js", r = document.querySelector('script[src*="' + n + '"]');
@@ -11287,8 +11287,6 @@ window.WebComponents = window.WebComponents || {}, function(e) {
 
 window.App = {
     init: function() {
-        App.TemplateLoader = document.querySelector("tsj4-bb-template-loader");
-        App.TemplateLoader.PATH = "templates";
         var hash = window.location.hash;
         App.main = new App.Main({
             startRoute: hash
@@ -11309,7 +11307,7 @@ App.MenuList = Backbone.Collection.extend({
     url: "/api/v1/menu",
     parse: function(res) {
         var items = [];
-        if (res.hasOwnProperty("items") && res.items) items.push(res.items);
+        if (res.hasOwnProperty("items") && res.items) items = res.items;
         return items;
     }
 });
@@ -11322,36 +11320,77 @@ App.MenuView = Backbone.View.extend({
         var data = {
             items: this.collection.toJSON()
         };
-        $(this.el).html(App.TemplateLoader.render(this.template, data));
+        console.log(window.TemplateLoader);
+        var template = window.TemplateLoader.render(this.template, data);
+        $(this.el).html(template);
+    }
+});
+
+App.GalleryItem = Backbone.Model.extend({
+    defaults: {
+        image: undefined,
+        title: undefined,
+        hash: undefined
+    }
+});
+
+App.GalleryList = Backbone.Collection.extend({
+    model: App.GalleryItem,
+    url: "/api/v1/galleries",
+    parse: function(res) {
+        var items = [];
+        if (res.hasOwnProperty("items") && res.items) items = res.items;
+        return items;
+    }
+});
+
+App.GalleryView = Backbone.View.extend({
+    el: ".content",
+    template: "gallery-view",
+    render: function() {
+        console.log("GalleryView.render");
+        var data = {
+            items: this.collection.toJSON()
+        };
+        var template = window.TemplateLoader.render(this.template, data);
+        $(this.el).html(template);
     }
 });
 
 App.Router = Backbone.Router.extend({
     routes: {
         start: "start",
-        help: "help",
+        galleries: "galleries",
         discover: "discover",
         account: "account"
     },
     start: function() {
-        console.log("start");
+        console.log("Router.start");
         App.menuView.collection.fetch({
             success: function() {
                 App.menuView.render();
             },
-            error: function() {
-                console.log("error");
+            error: function(e) {
+                console.log("Router.start, fetch error", e);
             }
         });
     },
-    account: function() {
-        console.log("account");
+    galleries: function() {
+        console.log("Router.galleries");
+        App.galleryView.collection.fetch({
+            success: function() {
+                App.galleryView.render();
+            },
+            error: function(e) {
+                console.log("Router.galleries, fetch error", e);
+            }
+        });
     },
     discover: function() {
-        console.log("discover");
+        console.log("Router.discover");
     },
     help: function() {
-        console.log("help");
+        console.log("Router.help");
     }
 });
 
@@ -11361,38 +11400,33 @@ App.Main = Backbone.Model.extend({
     },
     initialize: function() {
         console.log("Main.initialize");
-        this.createCollections();
         this.createViews();
         this.createRouter();
-    },
-    createCollections: function() {
-        console.log("Main.createCollections");
-        App.menu = new App.MenuList();
     },
     createViews: function() {
         console.log("Main.createViews");
         App.menuView = new App.MenuView({
-            collection: App.menu
+            collection: new App.MenuList()
+        });
+        App.galleryView = new App.GalleryView({
+            collection: new App.GalleryList()
         });
     },
     createRouter: function() {
-        var startRoute = this.get("startRoute");
+        var startRoute = this.get("startRoute") || "start";
         console.log("Main.createRouter, start route : " + startRoute);
         App.router = new App.Router();
         Backbone.history.start();
-        if (!startRoute) {
-            App.router.navigate("start", {
-                trigger: true
-            });
-        } else {
-            App.router.navigate(startRoute, {
-                trigger: true
-            });
-        }
+        App.router.navigate(startRoute, {
+            trigger: true
+        });
     }
 });
 
-window.onload = function() {
+window.addEventListener("polymer-ready", function(e) {
+    window.TemplateLoader = document.querySelector("tsj4-bb-template-loader");
+    window.TemplateLoader.PATH = "templates";
+    console.log(TemplateLoader);
     App.init();
-};
+});
 //# sourceMappingURL=min.js.map

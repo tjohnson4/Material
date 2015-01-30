@@ -1,33 +1,42 @@
 App.Router = Backbone.Router.extend({
     routes: {
-        "start"    : "start",
-        "help"     : "help",
-        "discover" : "discover",
-        "account"  : "account"
+        "start"     : "start",
+        "galleries" : "galleries",
+        "discover"  : "discover",
+        "account"   : "account"
     },
 
     start : function () {
-        console.log("start");
+        console.log("Router.start");
 
         App.menuView.collection.fetch({
             success : function () {
                 App.menuView.render();
             },
-            error : function () {
-                console.log("error")
+            error : function (e) {
+                console.log("Router.start, fetch error", e);
+            }
+        });
+    },
+
+    galleries : function () {
+        console.log("Router.galleries");
+
+        App.galleryView.collection.fetch({
+            success : function () {
+                App.galleryView.render();
+            },
+            error : function (e) {
+                console.log("Router.galleries, fetch error", e);
             }
         })
     },
 
-    account : function () {
-        console.log("account");
-    },
-
     discover : function () {
-        console.log("discover");
+        console.log("Router.discover");
     },
 
     help: function() {
-        console.log("help");
+        console.log("Router.help");
     }
 });

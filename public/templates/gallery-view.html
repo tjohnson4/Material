@@ -1,0 +1,7 @@
+<% _.each(obj.items, function (item) {%>
+<core-item src="<%= item.image %>" label="<%= item.title %>">
+    <a href="#galleries/<%= item.hash %>" target="_self"></a>
+</core-item>
+<% }); %>
+
+

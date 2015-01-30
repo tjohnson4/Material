@@ -1,5 +1,4 @@
-<% _.each(obj.items, function (item) { console.log(item) %>
-
+<% _.each(obj.items, function (item) { %>
     <% if (item.hasOwnProperty("icon") && item.icon) { %>
         <core-item icon="<%= item.icon %>" label="<%= item.label %>">
             <a href="#<%= item.hash %>" target="_self"></a>
@@ -9,4 +8,4 @@
             <a href="#<%= item.hash %>" target="_self"></a>
         </core-item>
     <% } %>
-<% } %>
+<% }); %>
