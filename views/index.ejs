@@ -4,6 +4,7 @@
         <title><%= title %></title>
 
         <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
         <link href="styles/min.css" media="all" rel="stylesheet" type="text/css">
 
         <style>
@@ -19,7 +20,6 @@
         <!-- 1. Load webcomponents.min.js for polyfill support. -->
         <script src="javascript/min.js"></script>
 
-
         <!-- 2. Use an HTML Import to bring in the element. -->
         <link rel="import" href="/bower_components/font-roboto/roboto.html">
         <link rel="import" href="/bower_components/core-scaffold/core-scaffold.html">
@@ -27,6 +27,7 @@
         <link rel="import" href="/bower_components/core-toolbar/core-toolbar.html">
         <link rel="import" href="/bower_components/core-menu/core-menu.html">
         <link rel="import" href="/bower_components/core-item/core-item.html">
+        <link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
         <link rel="import" href="/bower_components/tsj4-bb-template-loader/tsj4-bb-template-loader.html">
     </head>
 
@@ -36,14 +37,16 @@
         <core-scaffold>
             <core-header-panel navigation flex mode="seamed">
                 <core-toolbar>MENU</core-toolbar>
-                <core-menu theme="core-light-theme">
-
-                </core-menu>
+                <core-menu theme="core-light-theme"></core-menu>
             </core-header-panel>
-            <div tool flex>Title</div>
-            <core-icon-button tool icon="search"></core-icon-button>
-
-            <div class="content"></div>
+            <core-header-panel main mode="waterfall-tall">
+                <core-toolbar id="mainheader">
+                    <paper-icon-button id="navicon" icon="menu"></paper-icon-button>
+                    <div flex>Title</div>
+                    <paper-icon-button id="navicon" icon="search"></paper-icon-button>
+                </core-toolbar>
+                <div class="content"></div>
+            </core-header-panel>
         </core-scaffold>
     </body>
 </html>
