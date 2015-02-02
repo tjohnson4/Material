@@ -15,6 +15,20 @@
             .content {
                 height: 2000px;
             }
+
+            /* background for toolbar when it is condensed */
+            core-drawer-panel:not([narrow]) #navicon{
+                display:none;
+            }
+
+            [drawer] {
+                background-color: lightgray;
+            }
+
+            [main] {
+                background-color: white;
+            }
+
         </style>
 
         <!-- 1. Load webcomponents.min.js for polyfill support. -->
@@ -22,31 +36,47 @@
 
         <!-- 2. Use an HTML Import to bring in the element. -->
         <link rel="import" href="/bower_components/font-roboto/roboto.html">
-        <link rel="import" href="/bower_components/core-scaffold/core-scaffold.html">
+        <link rel="import" href="/bower_components/core-drawer-panel/core-drawer-panel.html">
         <link rel="import" href="/bower_components/core-header-panel/core-header-panel.html">
         <link rel="import" href="/bower_components/core-toolbar/core-toolbar.html">
         <link rel="import" href="/bower_components/core-menu/core-menu.html">
         <link rel="import" href="/bower_components/core-item/core-item.html">
+        <link rel="import" href="/bower_components/core-icon/core-icon.html">
+        <link rel="import" href="/bower_components/paper-item/paper-item.html">
+        <link rel="import" href="/bower_components/paper-button/paper-button.html">
         <link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
+        <link rel="import" href="/bower_components/core-animated-pages/core-animated-pages.html">
         <link rel="import" href="/bower_components/tsj4-bb-template-loader/tsj4-bb-template-loader.html">
     </head>
 
     <!-- use fullbleed attribute to specify the body should fill the viewport -->
     <body unresolved fullbleed layout>
         <tsj4-bb-template-loader></tsj4-bb-template-loader>
-        <core-scaffold>
-            <core-header-panel navigation flex mode="seamed">
-                <core-toolbar>MENU</core-toolbar>
-                <core-menu theme="core-light-theme"></core-menu>
-            </core-header-panel>
-            <core-header-panel main mode="waterfall-tall">
-                <core-toolbar id="mainheader">
-                    <paper-icon-button id="navicon" icon="menu"></paper-icon-button>
-                    <div flex>Title</div>
-                    <paper-icon-button id="navicon" icon="search"></paper-icon-button>
-                </core-toolbar>
-                <div class="content"></div>
-            </core-header-panel>
-        </core-scaffold>
+        <template id="template"  is="auto-binding">
+            <core-drawer-panel id="drawerPanel">
+                <core-header-panel drawer mode="seamed">
+                    <core-toolbar>MENU</core-toolbar>
+                    <template repeat="{{page in pages}}">
+                        <core-menu valueattr="hash" selected="{{route}}">
+                            <paper-item hash="{{page.hash}}">{{page.label}}</paper-item>
+                        </core-menu>
+                    </template>
+                </core-header-panel>
+                <core-header-panel main mode="waterfall-tall">
+                    <core-toolbar>
+                        <paper-icon-button id="navicon" icon="menu"></paper-icon-button>
+                        <div flex>Title</div>
+                        <paper-icon-button id="search-button" icon="search"></paper-icon-button>
+                    </core-toolbar>
+                    <core-animated-pages valueattr="hash" selected="{{route}}" transitions="slide-from-right">
+                        <template repeat="{{page in pages}}">
+                            <section hash="{{page.hash}}" layout vertical center-center>
+                                <div>{{page.label}}</div>
+                            </section>
+                        </template>
+                    </core-animated-pages>
+                </core-header-panel>
+            </core-drawer-panel>
+        </template>
     </body>
 </html>

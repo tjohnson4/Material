@@ -7,24 +7,31 @@ App.Main = Backbone.Model.extend({
     initialize : function () {
         console.log("Main.initialize");
 
-        this.createViews();
-        this.createRouter();
+        this.bindCollections();
     },
 
-    createViews : function () {
-        console.log("Main.createViews");
+    bindCollections : function () {
+        console.log("Main.bindCollections");
 
-        App.menuView = new App.MenuView({collection : new App.MenuList()});
-        App.galleryView = new App.GalleryView({collection : new App.GalleryList()});
-    },
+        var menu = new App.MenuList();
+        menu.fetch({
+            success : function () {
+                var data = menu.toJSON();
+                console.log("Main.bindCollections", data);
 
-    createRouter : function () {
-        var startRoute = this.get("startRoute") || "start";
-        console.log("Main.createRouter, start route : "+startRoute);
+                var template = document.querySelector('template[is="auto-binding"]');
+                template.pages = data;
 
-        App.router = new App.Router();
-        Backbone.history.start();
+                var navicon = document.getElementById("navicon"),
+                    drawer = document.getElementById("drawerPanel");
 
-        App.router.navigate(startRoute, {trigger:true});
+                navicon.addEventListener("click", function () {
+                    drawer.togglePanel();
+                });
+            },
+            error : function (e) {
+                console.log("Router.start, fetch error", e);
+            }
+        });
     }
 });

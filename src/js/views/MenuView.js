@@ -5,6 +5,7 @@ App.MenuView = Backbone.View.extend({
 
     render : function () {
         console.log("MenuView.render");
+        var menu = document.querySelector(this.el);
 
         var data = {
             items : this.collection.toJSON()
@@ -14,6 +15,9 @@ App.MenuView = Backbone.View.extend({
 
         var template = window.TemplateLoader.render(this.template, data);
 
-        $(this.el).html(template);
+        menu.innerHTML = template;
+
+        menu.add
     }
+
 });
